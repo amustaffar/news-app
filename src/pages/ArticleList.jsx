@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
 import { apiClient } from "../../api";
-import { Box, Grid } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 import ArticleCard from "../components/ArticleCard";
 
 const ArticleList = (props) => {
   // [] extract into a custom hook
-  // [] errors are not handled well - yet
   const [articles, setArticles] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    apiClient.get("/api/articles").then((res) => {
-      setArticles(res.data.articles);
-    });
+    apiClient
+      .get("/api/articles")
+      .then((res) => {
+        setArticles(res.data.articles);
+      })
+      .catch((err) => {
+        setError(err);
+      });
   }, []);
 
   return (
@@ -20,15 +25,17 @@ const ArticleList = (props) => {
         Search bar to be placed here
       </Box>
 
-      <Grid container spacing={2} p={2}>
-        {articles.map((article) => {
-          return (
-            <Grid item xs={12} sm={6} md={4} lg={3}>
-              <ArticleCard article={article} />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Container maxWidth="lg">
+        <Grid container spacing={2} p={2}>
+          {articles.map((article) => {
+            return (
+              <Grid item xs={12} sm={6} md={4} lg={3}>
+                <ArticleCard article={article} />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Container>
     </Box>
   );
 };
