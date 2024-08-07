@@ -5,7 +5,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 /*
 [ ] export planning screenshot from miro to the repo
-[ ] loading page - on /articles or /
+[x] loading page - on /articles or /
 [ ] loading page - "load more" style button - limit at endpoints to 10
 [x] remove any console.logs
 [ ] destructure { comments } from props 

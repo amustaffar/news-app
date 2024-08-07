@@ -27,17 +27,19 @@ const CommentList = (props) => {
                   secondary={
                     <>
                       <Typography
-                        component="p"
+                        component="span"
                         variant="body2"
                         color="text.primary"
+                        display="block"
                         mb={1}
                       >
                         {comment.body}
                       </Typography>
                       <Typography
-                        component="p"
+                        component="span"
                         variant="caption"
                         color="text.primary"
+                        display="block"
                       >
                         Date: {comment.created_at.split("T")[0]}
                       </Typography>

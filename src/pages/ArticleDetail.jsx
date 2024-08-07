@@ -8,22 +8,11 @@ import Loading from "../components/Loading";
 import AxiosError from "../components/AxiosError";
 import CommentList from "../components/CommentList";
 import { useArticle } from "../hooks/useArticle";
+import CommentForm from "../components/CommentForm";
 
 const ArticleDetail = () => {
-  // const [article, setArticle] = useState(null);
-  // const [error, setError] = useState(null);
   const { article_id } = useParams();
-  const { article, error, vote } = useArticle(article_id);
-
-  // useEffect(() => {
-  //   loadArticle(article_id)
-  //     .then((res) => {
-  //       setArticle(res);
-  //     })
-  //     .catch((err) => {
-  //       setError(err);
-  //     });
-  // }, [article_id]);
+  const { article, error, vote, comment } = useArticle(article_id);
 
   if (error) {
     return <AxiosError error={error} />;
@@ -38,24 +27,10 @@ const ArticleDetail = () => {
           <Loading />
         )}
         {article && <CommentList comments={article.comments} />}
+        {article && <CommentForm onSubmit={comment} />}
       </Container>
     </Box>
   );
 };
-
-// const loadArticle = async (id) => {
-//   const { article } = await apiClient
-//     .get(`/api/articles/${id}`)
-//     .then((res) => res.data);
-
-//   const { comments } = await apiClient
-//     .get(`/api/articles/${id}/comments`)
-//     .then((res) => res.data);
-
-//   return {
-//     ...article,
-//     comments,
-//   };
-// };
 
 export default ArticleDetail;
