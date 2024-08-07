@@ -7,23 +7,23 @@ import { Container } from "@mui/material";
 import Loading from "../components/Loading";
 import AxiosError from "../components/AxiosError";
 import CommentList from "../components/CommentList";
+import { useArticle } from "../hooks/useArticle";
 
 const ArticleDetail = () => {
-  const [article, setArticle] = useState(null);
-  const [error, setError] = useState(null);
+  // const [article, setArticle] = useState(null);
+  // const [error, setError] = useState(null);
   const { article_id } = useParams();
+  const { article, error, vote } = useArticle(article_id);
 
-  useEffect(() => {
-    loadArticle(article_id)
-      .then((res) => {
-        setArticle(res);
-      })
-      .catch((err) => {
-        setError(err);
-      });
-  }, [article_id]);
-
-  console.log(article);
+  // useEffect(() => {
+  //   loadArticle(article_id)
+  //     .then((res) => {
+  //       setArticle(res);
+  //     })
+  //     .catch((err) => {
+  //       setError(err);
+  //     });
+  // }, [article_id]);
 
   if (error) {
     return <AxiosError error={error} />;
@@ -32,26 +32,30 @@ const ArticleDetail = () => {
   return (
     <Box py={3}>
       <Container maxWidth="md">
-        {article ? <ArticleView article={article} /> : <Loading />}
+        {article ? (
+          <ArticleView article={article} onVote={vote} />
+        ) : (
+          <Loading />
+        )}
         {article && <CommentList comments={article.comments} />}
       </Container>
     </Box>
   );
 };
 
-const loadArticle = async (id) => {
-  const { article } = await apiClient
-    .get(`/api/articles/${id}`)
-    .then((res) => res.data);
+// const loadArticle = async (id) => {
+//   const { article } = await apiClient
+//     .get(`/api/articles/${id}`)
+//     .then((res) => res.data);
 
-  const { comments } = await apiClient
-    .get(`/api/articles/${id}/comments`)
-    .then((res) => res.data);
+//   const { comments } = await apiClient
+//     .get(`/api/articles/${id}/comments`)
+//     .then((res) => res.data);
 
-  return {
-    ...article,
-    comments,
-  };
-};
+//   return {
+//     ...article,
+//     comments,
+//   };
+// };
 
 export default ArticleDetail;
