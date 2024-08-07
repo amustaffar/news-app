@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
 const AxiosError = (props) => {
+  console.log(props.error);
   if (props.error.response.status === 404) {
     return (
       <Box p={3}>

@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { apiClient } from "../../api";
 import { Box, Container, Grid } from "@mui/material";
 import ArticleCard from "../components/ArticleCard";
+import Loading from "../components/Loading";
 
 const ArticleList = (props) => {
   // [] extract into a custom hook
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState(null);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -18,6 +19,10 @@ const ArticleList = (props) => {
         setError(err);
       });
   }, []);
+
+  if (articles === null) {
+    return <Loading />;
+  }
 
   return (
     <Box>
