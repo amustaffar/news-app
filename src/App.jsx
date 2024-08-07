@@ -4,8 +4,11 @@ import ArticleList from "./pages/ArticleList";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 /*
-steps:
-[ ] Router needs setting up
+[ ] export planning screenshot from miro to the repo
+[ ] loading page - on /articles or /
+[ ] loading page - "load more" style button - limit at endpoints to 10
+[x] remove any console.logs
+[ ] destructure { comments } from props 
 */
 
 function App() {
