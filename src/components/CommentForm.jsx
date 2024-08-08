@@ -5,9 +5,9 @@ const INITIAL_STATE = { author: "", body: "" };
 
 /*
 TO DOs:
-[ ] for validation
+[ ] form validation
 [ ] better error handling - user not submitting the same comment upon BE latency
-[ ] react context - user
+[ ] react context - user - must be logged in 
 */
 
 const CommentForm = (props) => {
@@ -27,13 +27,14 @@ const CommentForm = (props) => {
       sx={{ width: "100%", bgcolor: "background.paper", p: 2 }}
     >
       <Typography variant="h5" mb={2}>
-        Leave your comment
+        Leave your comment (only for registered users)
       </Typography>
       <TextField
         onChange={(e) => setState({ ...state, author: e.target.value })}
         value={state.author}
-        label="Your name"
+        label="Your username"
         fullWidth
+        required
       />
       <TextField
         onChange={(e) => setState({ ...state, body: e.target.value })}
@@ -42,6 +43,7 @@ const CommentForm = (props) => {
         margin="normal"
         multiline
         fullWidth
+        required
       />
       <Button variant="contained" type="submit">
         Submit
