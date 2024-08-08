@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ArticleCard = (props) => {
   return (
-    <Card>
+    <Card sx={{ height: "100%" }}>
       <CardMedia sx={{ height: 200 }} image={props.article.article_img_url} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">

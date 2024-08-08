@@ -1,4 +1,6 @@
+import { Fragment } from "react";
 import {
+  IconButton,
   Box,
   Divider,
   List,
@@ -6,18 +8,41 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { useUser } from "../contexts/User";
+import { apiClient } from "../../api";
 
 const CommentList = (props) => {
+  const { loggedInUser, setLoggedInUser } = useUser();
+
+  function handleClick(id) {
+    apiClient.delete(`/api/comments/${id}`).then(() => {
+      // refresh the window upon deletion
+      window.location.reload();
+    });
+  }
+
   return (
     <Box>
-      <Typography variant="h4" mb={2}>
-        Comments
-      </Typography>
+      <Typography variant="h4" mb={2}></Typography>
       <List sx={{ width: "100%", bgcolor: "background.paper" }}>
         {props.comments.map((comment) => {
           return (
-            <>
-              <ListItem alignItems="flex-start">
+            <Fragment key={comment.comment_id}>
+              <ListItem
+                alignItems="flex-start"
+                secondaryAction={
+                  loggedInUser?.username === comment.author && (
+                    <IconButton
+                      edge="end"
+                      aria-label="comments"
+                      onClick={() => handleClick(comment.comment_id)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  )
+                }
+              >
                 <ListItemText
                   primary={
                     <Typography fontWeight="bold" mb={1}>
@@ -48,7 +73,7 @@ const CommentList = (props) => {
                 />
               </ListItem>
               <Divider />
-            </>
+            </Fragment>
           );
         })}
       </List>
