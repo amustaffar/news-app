@@ -5,6 +5,10 @@ import ArticleCard from "../components/ArticleCard";
 import Loading from "../components/Loading";
 import { useUser } from "../contexts/User";
 import Pagination from "@mui/material/Pagination";
+import { useParams } from "react-router-dom";
+
+// GET /articles ({ })
+// GET /topics/:id/articles ({ topic: 'id' })
 
 const ArticleList = (props) => {
   // [] extract into a custom hook
@@ -12,17 +16,23 @@ const ArticleList = (props) => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const { loggedInUser } = useUser();
+  const { topic } = useParams();
 
   useEffect(() => {
+    let url = `/api/articles?page=${page}`;
+    if (topic) {
+      url = `${url}&topic=${topic}`;
+    }
+
     apiClient
-      .get(`/api/articles?page=${page}`)
+      .get(url)
       .then((res) => {
         setResponse(res.data);
       })
       .catch((err) => {
         setError(err);
       });
-  }, [page]);
+  }, [page, topic]);
 
   if (response === null) {
     return <Loading />;

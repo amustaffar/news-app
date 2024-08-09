@@ -21,6 +21,7 @@ function App() {
         <Route path="/" element={<Navigate to="articles" />} />
         <Route path="/articles" element={<ArticleList />} />
         <Route path="/articles/:article_id" element={<ArticleDetail />} />
+        <Route path="/topics/:topic/articles" element={<ArticleList />} />
         <Route path="/login" element={<LoginList />} />
       </Routes>
     </UserProvider>

@@ -15,7 +15,7 @@ const AxiosError = (props) => {
   return (
     <Box p={3}>
       <Typography color="red" textAlign="center">
-        Sorry, you're not a registered user!
+        Sorry, you're not a registered user
       </Typography>
     </Box>
   );
